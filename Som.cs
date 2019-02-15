@@ -4,7 +4,7 @@ using UnityEngine;
 
 	public class Som : MonoBehaviour {
 
-		private AudioSource AudioS;
+		private AudioSource audioS;
 
 		//Sons do personagem
 		[Header("PERSONAGEM")]
@@ -27,9 +27,17 @@ using UnityEngine;
 	    [SerializeField]
 		private AudioClip laser;
 
+		[Header("MUSICAS")]
+		[SerializeField]   
+		private AudioClip abertura;
+		[SerializeField]
+		private AudioClip fase1;
+		[SerializeField]
+		private AudioClip final;
+
 		//Inicialização do script
 		void Start () {
-			AudioS = GetComponent<AudioSource>();
+			audioS = GetComponent<AudioSource>();
 		}
 
 		//Metodo public par tocar o som
@@ -37,24 +45,51 @@ using UnityEngine;
 		public void PlaySound(string name){	
 			switch (name) {
 				case "pulo":
-					AudioS.PlayOneShot (pulo);
+					audioS.PlayOneShot (pulo);
 					break;
 
 				case "pedra":
-					AudioS.PlayOneShot (pedra);
+					audioS.PlayOneShot (pedra);
 					break;
 
 				case "fogo":
-					AudioS.PlayOneShot (fogo);
+					audioS.PlayOneShot (fogo);
 					break;
 
 				case "laser":
-					AudioS.PlayOneShot (laser);
+					audioS.PlayOneShot (laser);
 					break;
 
 			   case "colisao":
-				AudioS.PlayOneShot (player);
-				break;
+					audioS.PlayOneShot (player);
+					break;
 			}
 		}
+
+	//Metodo public para tocar as musicas
+	//Parametro name = nome da musica a ser tocada
+	public void PlayMusic(string nameMusic){	
+
+		if (audioS.isPlaying) {
+			audioS.Stop();
+		}
+
+		switch (nameMusic) {
+			case "abertura":
+				audioS.clip  = abertura;
+				break;
+
+			case "fase1":
+				audioS.clip = fase1;
+				break;
+
+			case "final":
+				audioS.clip = final;
+				break;		
+			}
+
+		if (audioS.clip != null) {
+			audioS.Play ();
+		}
+	  }
 	}
